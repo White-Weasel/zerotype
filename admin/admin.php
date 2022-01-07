@@ -10,6 +10,7 @@
 
 </head>
 <body>
+
 	<div id="header">
 		<div>
 			<div class="logo">
@@ -122,7 +123,10 @@
 					elm = document.getElementById("time-left");
 					elm.innerHTML = i/1000;
 					setTimeout(function(){
-						window.location.replace("http://localhost/login.php");
+						<?php 
+						$root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+						?>
+						window.location.replace("<?= $root.'/login.php' ?>");
 					}, i);
 					setInterval(function(){
 						i = i - 1000;
