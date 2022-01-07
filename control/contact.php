@@ -29,7 +29,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
     else
         echo "ERROR!";
     header("Location: ". $_SERVER['HTTP_REFERER']);
-    return "Success";
+    print_r($result);
 }
 elseif($_SERVER['REQUEST_METHOD'] == "GET")
 {

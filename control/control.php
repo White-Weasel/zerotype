@@ -144,7 +144,7 @@ class Contacts
         {
             return false;
         }
-        $sql = "Delete from contact where id='$this->id_contact'";
+        $sql = "Delete from contact where ID_contact='$this->id_contact'";
         $run = mysqli_query($conn, $sql);
         //echo $sql;
         return $run;

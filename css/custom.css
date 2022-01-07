@@ -20,12 +20,12 @@
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #04AA6D;
+  background-color: #989fa0;
   color: white;
 }
 
 .user-table th:last-of-type {
-  background-color: brown;
+  background-color: #856363;
   min-width: 10em;
 }
 
