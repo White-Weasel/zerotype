@@ -123,10 +123,7 @@
 					elm = document.getElementById("time-left");
 					elm.innerHTML = i/1000;
 					setTimeout(function(){
-						<?php 
-						$root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
-						?>
-						window.location.replace("<?= $root.'/login.php' ?>");
+						window.location.replace(window.location.href.replace('admin/admin.php', 'login.php'));
 					}, i);
 					setInterval(function(){
 						i = i - 1000;
