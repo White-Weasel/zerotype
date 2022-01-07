@@ -1,0 +1,95 @@
+:root{
+    --red: rgb(255, 58, 58);
+    --blue: rgb(42, 123, 245);
+    --dark-blue: rgb(43, 96, 209);
+    --light-gray: rgb(194, 194, 194);
+    --light: rgb(238, 238, 238);
+    --dark: #333;
+    color: var(--dark);
+    font-size:16px;
+    line-height: 1.5;
+}
+.table-blue thead{
+    font-weight: bold;
+    color:white;
+    background-color: var(--blue);
+}
+.table-blue>tbody>tr:nth-child(odd){
+    background-color: var(--light);
+}
+.table, .table td,th{
+    border-top: 1px solid var(--light-gray); 
+    border-bottom: 1px solid var(--light-gray);
+    border-collapse: collapse;
+    padding: 0.375rem;
+}
+button{
+    color: var(--dark);
+}
+.text-bold{
+    font-weight: bold;
+}
+.round{
+    border-radius: 0.32rem;
+}
+.shadow-box{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.input-field{
+    padding: 0.3125rem;
+    border: 1px solid var(--light-gray);
+    transition: all 300ms;
+    outline: none;
+}
+.input-field:focus{
+    border-color: var(--blue);
+}
+.collapse{
+    max-height: 0;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 300ms ease-out;
+}
+.flex{
+    display:flex;
+}
+.full-w{
+    width: 100%;
+}
+.full-h{
+    height: 100%;
+}
+.align-items-center{
+    align-items: center;
+}
+.justify-content-center{
+    justify-content: center;
+}
+.flex-dir-col{
+    flex-direction: column;
+}
+.text-center{
+    text-align: center;
+}
+.btn{
+    display:inline-block ;
+    white-space: nowrap;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border:transparent;
+    padding:.375rem .75rem;
+    transition: all 300ms;
+    border-radius: 0.32rem;
+}
+.btn:hover{
+    background-color: var(--light-gray);
+}
+.btn-blue{
+    color:white;
+    background-color: var(--blue);
+}
+.btn-blue:hover{
+   background-color: var(--dark-blue);
+}
