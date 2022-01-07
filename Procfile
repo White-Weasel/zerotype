@@ -1,1 +1,1 @@
-web: vendor/bin/heroku-php-apache2/trang1.php
+web: vendor/bin/heroku-php-apache2
