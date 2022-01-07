@@ -145,7 +145,7 @@
 					elm = document.getElementById("time-left");
 					elm.innerHTML = i/1000;
 					setTimeout(function(){
-						window.location.replace("http://localhost/login.php");
+						window.location.replace(window.location.href.replace('admin/news.php', 'login.php'));
 					}, i);
 					setInterval(function(){
 						i = i - 1000;
