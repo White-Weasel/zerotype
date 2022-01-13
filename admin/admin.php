@@ -123,7 +123,7 @@
 					elm = document.getElementById("time-left");
 					elm.innerHTML = i/1000;
 					setTimeout(function(){
-						window.location.replace(window.location.href.replace('admin/admin.php', 'login.php'));
+						window.location.replace("http://<?=$_SERVER['HTTP_HOST'] ?>/login.php");
 					}, i);
 					setInterval(function(){
 						i = i - 1000;
@@ -160,7 +160,7 @@
 		elm = document.getElementById("time-left");
 		elm.innerHTML = i/1000;
 		setTimeout(function(){
-			window.location.replace(window.location.href.replace('admin/admin.php', 'login.php'));
+			window.location.replace("http://<?=$_SERVER['HTTP_HOST'] ?>/login.php");
 		}, i);
 		setInterval(function(){
 			i = i - 1000;

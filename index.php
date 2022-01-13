@@ -10,11 +10,11 @@
 	<div id="header">
 		<div>
 			<div class="logo">
-				<a href="/trang1.php">Zero Type</a>
+				<a href="/index.php">Zero Type</a>
 			</div>
 			<ul id="navigation">
 				<li class="active">
-					<a href="/trang1.php">Home</a>
+					<a href="/index.php">Home</a>
 				</li>
 				<li>
 					<a href="/features.php">Features</a>

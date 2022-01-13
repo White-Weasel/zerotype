@@ -1,9 +1,9 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT']."/control/connect.php");
+require_once $_SERVER['DOCUMENT_ROOT']."/control/connect.php";
 
 class Users
 {
-    public $id, $username, $pass, $gender, $birth;
+    public $id, $username, $pass, $gender, $birth, $permission, $avatar;
 
     public function __construct()
     {
