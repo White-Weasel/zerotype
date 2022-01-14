@@ -20,7 +20,7 @@ function db_connect()
         $pass="";
         $database = "ltmt-th";
         $conn = mysqli_connect($server, $user, $pass, $database);
-        mysqli_query($conn, 'set names "utf8');
+        mysqli_query($conn, 'set names "utf8"');
 
         return $conn;
     }

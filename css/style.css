@@ -233,7 +233,7 @@ p a {
 	text-align: center;
 	text-decoration: none;
 }
-.more:hover, .message input[type='submit']:hover {
+.more:hover, .message input[type='submit']:hover , .message button[type='button']:hover{
 	background-color: #f99600;
 	color: #000;
 }
@@ -339,7 +339,7 @@ p a {
 	overflow: auto;
 	resize: none;
 }
-.message input[type='submit'] {
+.message input[type='submit'], .message button[type='button'] {
 	float: right;
 	background-color: #818181;
 	color: #d5d5d5;

@@ -7,12 +7,30 @@ class API
     { 
         $this->init();
         $this->process();
-        $this->respond();
+        $this->response();
     }
 
     protected function init()
     {
         // override this
+    }
+
+    protected function get_params($input)
+    {
+        $input = trim($input);
+        if(strlen($input) > 3)
+        {
+            $tmp = explode('?', $input);
+            $result = [];
+            foreach($tmp as $t)
+            {
+                $l = explode('=', $t);
+                $result[$l[0]] = $l[1];
+            }
+            return($result);
+        }
+
+        return [];
     }
 
     protected function process()
@@ -21,7 +39,7 @@ class API
         switch($this->method)
         {
             case 'GET':{
-                $this->params = explode('?', $_SERVER['QUERY_STRING']);
+                $this->params = $this->get_params($_SERVER['QUERY_STRING']);
                 $this->result = $this->GET();
                 break;
             }
@@ -30,7 +48,7 @@ class API
                 break;
             }
             case 'DELETE':{
-                $this->params = explode('?', $_SERVER['QUERY_STRING']);
+                $this->params = $this->get_params($_SERVER['QUERY_STRING']);
                 $this->result = $this->DELETE();
                 break;
             }
@@ -41,7 +59,7 @@ class API
             }
         }
 
-        $this->respond();
+        $this->response();
     }
 
     protected function GET()
@@ -69,9 +87,9 @@ class API
         //overide this
     }
 
-    public function respond()
+    protected function response()
     {
-        // default respond, the method function should override this
+        // default response, the method function should override this
         if(!is_null($this->result))
             print_r($this->result);
     }

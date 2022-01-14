@@ -17,6 +17,7 @@ elseif(!( isset($_SESSION['username']) && isset($_SESSION['password']))):?>
 <head>
 	<meta charset="UTF-8">
 	<title>Log In</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
 <body>
@@ -65,12 +66,12 @@ elseif(!( isset($_SESSION['username']) && isset($_SESSION['password']))):?>
 			<h1>SignUp</h1>
 			<div>
                 <form method="post" class="message" action="/control/user.php">
-                    <input type="text" 		name="username" value="username" 	onFocus="this.select();" onMouseOut="javascript:return false;"/>
-					<input type="password" 	name="password" value="password" 	onFocus="this.select();" onMouseOut="javascript:return false;"/>
-					<input type="text" 		name="gender"	value="gender" 		onFocus="this.select();" onMouseOut="javascript:return false;"/>
-					<input type="date" 		name="birth" 	value="" 			onFocus="this.select();" onMouseOut="javascript:return false;"/>
+                    <input type="text" 		name="username" value="username" 	id="SignUpUsername"		require		onFocus="this.select();" onMouseOut="javascript:return false;"/>
+					<input type="password" 	name="password" value="password" 	id="SignUpPass" 		require		onFocus="this.select();" onMouseOut="javascript:return false;"/>
+					<input type="text" 		name="gender"	value="gender" 		id="SignUpGendere" 		onFocus="this.select();" onMouseOut="javascript:return false;"/>
+					<input type="date" 		name="birth" 	value="" 			id="SignUpDate" 		onFocus="this.select();" onMouseOut="javascript:return false;"/>
                     
-					<input type="submit" name="signUp" value="Sign Up"/>
+					<button type="button" name="signUp" value="Sign Up" onclick="sigUp()">Sign Up</button>
                 </form>
                 
 			</div>
@@ -87,6 +88,26 @@ elseif(!( isset($_SESSION['username']) && isset($_SESSION['password']))):?>
 			</p>
 		</div>
 	</div>
+
+
+
+
+	<script>
+		function sigUp()
+		{
+			$.getJSON(
+				"/api/user.php",
+				{
+					username: document.getElementById("SignUpUsername").value,
+
+				},
+				function(data) {
+					alert(data.ID == undefined)
+					
+				}
+			);
+		}
+	</script>
 </body>
 </html>
 

@@ -1,6 +1,6 @@
 <?php 
     require_once $_SERVER['DOCUMENT_ROOT']."/api/api.php";
-    require_once $_SERVER['DOCUMENT_ROOT']."/control/control.php";
+    require_once $_SERVER['DOCUMENT_ROOT']."/models/contact.php";
     
     class ContactAPI extends API
     {
