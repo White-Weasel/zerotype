@@ -6,7 +6,7 @@
     {
         private $user, $connect;
         private $att_map;
-        const GET_OPTION = ['id', 'username', 'pass', 'gender', 'birth', 'permission', 'avatar'];
+        const OPTIONS = ['id', 'username', 'pass', 'gender', 'birth', 'permission', 'avatar'];
 
         protected function init()
         {
@@ -17,23 +17,24 @@
 
         protected function GET()
         {
+            global $conn;
             $sql = "SELECT * FROM user WHERE ";
             foreach($this->params as $p_key => $p_value)
             {
-                if(in_array($p_key, $this->options))
+                if(in_array($p_key, $this::OPTIONS))
                     $sql = $sql."$p_key='$p_value' AND ";
             }
             $sql = str_replace_last(" AND ", "", $sql);
-            $run = mysqli_query($this->connect, $sql);
+            $run = mysqli_query($conn, $sql);
             header('Content-Type: application/json; charset=utf-8');
-            echo json_encode($run->fetch_all());
+            echo json_encode($run->fetch_assoc());
         }
 
         protected function POST()
         {
             foreach($_POST as $p_key => $p_value)
             {
-                if(in_array($p_key, $this::GET_OPTION))
+                if(in_array($p_key, $this::OPTIONS))
                 {
                     eval("\$this->user->".$p_key."=\$p_value;");
                 }
@@ -72,7 +73,7 @@
                         }
                         else
                         {
-                            $_SESSION['user']->delete($this->user);
+                            $_SESSION['user']->delete($_POST['id']);
                             break;
                         }
                     }

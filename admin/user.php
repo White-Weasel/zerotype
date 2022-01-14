@@ -32,15 +32,17 @@
 			</ul>
 		</div>
 	</div>
+	<!-- admin site -->
+
 	<div id="contents">
 		<div id="tagline" class="clearfix">
 		<?php
 			include $_SERVER['DOCUMENT_ROOT']."/control/control.php";
 			session_start();
-			if(isset($_SESSION['username'])):?>
+			if(isset($_SESSION['user'])):?>
 
 			<?php 
-				if((new Users())->validate($_SESSION['username'], $_SESSION['password'])):?>
+				if((new Users())->validate($_SESSION['user']->username, $_SESSION['user']->pass)):?>
 
             <br>
             <table class="table table-blue user-table">

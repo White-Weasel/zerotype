@@ -5,11 +5,11 @@ if(isset($_POST['submitLogIn'])):
 	
 	include($_SERVER['DOCUMENT_ROOT']."/control/control.php");
 
-	$_SESSION['username'] = $_POST['username'];
-	$_SESSION['password'] = $_POST['password'];
+	$_SESSION['user']->username = $_POST['username'];
+	$_SESSION['user']->pass = $_POST['password'];
 	header("Location: /admin/admin.php");
 }
-elseif(!( isset($_SESSION['username']) && isset($_SESSION['password']))):?>
+elseif(!( isset($_SESSION['user']))):?>
 
 <!DOCTYPE HTML>
 <!-- Website template by freewebsitetemplates.com -->
@@ -49,7 +49,6 @@ elseif(!( isset($_SESSION['username']) && isset($_SESSION['password']))):?>
 		<div class="section">
 			<h1>Login</h1>
 		
-			
 			<div>
                 <form method="post" class="message">
                     <input type="text" name="username" value="username" onFocus="this.select();" onMouseOut="javascript:return false;"/>
@@ -57,6 +56,8 @@ elseif(!( isset($_SESSION['username']) && isset($_SESSION['password']))):?>
                     <input type="submit" name="submitLogIn" value="LogIn"/>
                 </form>
 			</div>
+			<a href="/admin/forgetPassword.php">Forgot your password?</a>
+			
 			
 			
 		</div>
@@ -65,7 +66,7 @@ elseif(!( isset($_SESSION['username']) && isset($_SESSION['password']))):?>
 		<div class="section">
 			<h1>SignUp</h1>
 			<div>
-                <form method="post" class="message" action="/control/user.php">
+                <form method="post" class="message" action="/control/user.php" id="SignUpForm">
                     <input type="text" 		name="username" value="username" 	id="SignUpUsername"		require		onFocus="this.select();" onMouseOut="javascript:return false;"/>
 					<input type="password" 	name="password" value="password" 	id="SignUpPass" 		require		onFocus="this.select();" onMouseOut="javascript:return false;"/>
 					<input type="text" 		name="gender"	value="gender" 		id="SignUpGendere" 		onFocus="this.select();" onMouseOut="javascript:return false;"/>
@@ -93,6 +94,12 @@ elseif(!( isset($_SESSION['username']) && isset($_SESSION['password']))):?>
 
 
 	<script>
+		function toAdmin()
+		{
+			window.location.replace("http://<?=$_SERVER['HTTP_HOST'] ?>/admin/admin.php");
+		}
+
+
 		function sigUp()
 		{
 			$.getJSON(
@@ -102,10 +109,34 @@ elseif(!( isset($_SESSION['username']) && isset($_SESSION['password']))):?>
 
 				},
 				function(data) {
-					alert(data.ID == undefined)
+					if(!(data == null))
+						//check username exist
+						alert("Account name already exist!")
+					else{
+						//signup
+						$.ajax({
+						url : '/api/user.php',
+						type: "POST",
+						data: {
+							username: document.getElementById("SignUpUsername").value,
+							pass: document.getElementById("SignUpPass").value,
+							gender: document.getElementById("SignUpGendere").value,
+							date: document.getElementById("SignUpDate").value,
+							action: 'insert'
+							},
+						success: toAdmin
+						});
+
+						
+					}
 					
 				}
 			);
+		}
+
+		function login()
+		{
+
 		}
 	</script>
 </body>

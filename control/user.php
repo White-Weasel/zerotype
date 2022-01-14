@@ -27,8 +27,8 @@ if($_SERVER['REQUEST_METHOD'] == "POST")
             session_unset();  
             session_destroy();
             session_start();
-            $_SESSION['username'] = $user->username;
-            $_SESSION['password'] = $user->pass;
+            $_SESSION['user']->username = $user->username;
+            $_SESSION['user']->pass = $user->pass;
             $redirect_location = "/admin/admin.php";
         }
         else

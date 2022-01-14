@@ -15,13 +15,13 @@ class Users
     public function __construct()
     {
         $this->connect = db_connect();
-        
     }
 
     public function login()
     {
+        global $conn;
         $sql = "SELECT * from user where username='$this->username' and pass='$this->pass'";
-        $run = mysqli_query($this->connect, $sql);
+        $run = mysqli_query($conn, $sql);
         if($run && $run->num_rows > 0)
         {
 
@@ -51,8 +51,9 @@ class Users
 
     public function validate_User($user)
     {
+        global $conn;
         $sql = "SELECT * from user where username='$user->username' and pass='$user->pass'";
-        $run = mysqli_query($this->connect, $sql);
+        $run = mysqli_query($conn, $sql);
         //echo $sql;
         if(isset($run->num_rows))
             return $run->num_rows;
@@ -69,6 +70,7 @@ class Users
 
     public function insert($new_user)
     {
+        global $conn;
         if(isset($this->id))
         {
             if(is_null($this->secretKey))
@@ -77,19 +79,24 @@ class Users
         }
         else
         {
+            $new_user->secretKey = generateRandomString(20);
+            if(is_null($new_user->permission))
+                $new_user->permission = 10;
             $sql = "INSERT into user(Username, Pass, Gender, Birth, Permission, Avatar) values('$new_user->username', '$new_user->pass', '$new_user->gender', '$new_user->birth', '$new_user->permission', '$new_user->avatar')";
         }
-        $run = mysqli_query($this->connect, $sql);
+        $run = mysqli_query($conn, $sql);
         //echo $sql;
+        $new_user->login();
         return $run;
     }
 
     public function select()
     {
+        global $conn;
         if($this->has_permission($this::ADMIN_PERMISSION))
         {
             $sql = "SELECT * from user";
-            $run = mysqli_query($this->connect, $sql);
+            $run = mysqli_query($conn, $sql);
             //echo $sql;
             return $run;
         }
@@ -98,6 +105,7 @@ class Users
 
     public function update($new_user)
     {
+        global $conn;
         if($this->id==$new_user->id || $this->has_permission($this::ADMIN_PERMISSION))
         {    
             $sql = "update user set ";
@@ -142,7 +150,7 @@ class Users
             }
             $sql = str_replace_last(", ", "", $sql);
             $sql = $sql." WHERE id='$new_user->id'";
-            $run = mysqli_query($this->connect, $sql);
+            $run = mysqli_query($conn, $sql);
             //echo $sql;
             return $run;
         }
@@ -154,6 +162,7 @@ class Users
 
     public function delete($id=null)
     {
+        global $conn;
         if(!is_null(($id)) && $this->has_permission($this::ADMIN_PERMISSION))
         {
             $sql = "Delete from user where id='$id'";
@@ -163,7 +172,7 @@ class Users
             $sql = "Delete from user where id='$this->id'";
         }
         
-        $run = mysqli_query($this->connect, $sql);
+        $run = mysqli_query($conn, $sql);
         //echo $sql;
         return $run;
     }

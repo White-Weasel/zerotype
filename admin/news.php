@@ -78,10 +78,10 @@
 		<div id="tagline" class="clearfix">
 		<?php
 			
-			if(isset($_SESSION['username'])):?>
+			if(isset($_SESSION['user'])):?>
 
 			<?php 
-				if((new Users())->validate($_SESSION['username'], $_SESSION['password'])):?>
+				if((new Users())->validate($_SESSION['user']->username, $_SESSION['user']->pass)):?>
 
             <br>
             <table id="tb" class="table table-blue user-table" style="overflow: hidden;">

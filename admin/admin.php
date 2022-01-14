@@ -67,15 +67,17 @@
 			}
 			
 			$_SESSION['LAST_ACTIVITY'] = time(); 
-			if(isset($_SESSION['username'])):?>
+			if(isset($_SESSION['user'])):?>
 
 			<?php 
 				//Validate user, put all html elements of the admin page inside this if statement
-				if((new Users())->validate($_SESSION['username'], $_SESSION['password'])):?>
+				if((new Users())->validate($_SESSION['user']->username, $_SESSION['user']->pass)):?>
 				
 			
-			<h1 style="text-align: center;">Hello <span class='text-bold'><?= $_SESSION["username"]?></span></h1>
+			<h1 style="text-align: center;">Hello <span class='text-bold'><?= $_SESSION["user"]->username?></span></h1>
             <br>
+			
+
 
 			<a class="info-box" href="/admin/user.php?action=show">
 				<span class="info-box-icon bg-info"><img src="/images/user-icon.png"></span>
@@ -85,6 +87,10 @@
 				</div>
 				
 			</a>
+
+			
+			
+			
 
 			<a class="info-box" href="/admin/contact.php?action=show">
 				<span class="info-box-icon bg-info"><img src="/images/contact-icon.png"></span>
