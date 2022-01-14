@@ -86,7 +86,7 @@
 		<div id="tagline" class="clearfix">
 		<?php
 			
-			if(isset($_SESSION['username'])):?>
+			if(isset($_SESSION['user'])):?>
 
 			<?php 
 				if((new Users())->validate($_SESSION['user']->username, $_SESSION['user']->pass)):?>

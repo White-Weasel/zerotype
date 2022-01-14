@@ -32,8 +32,6 @@
 			</ul>
 		</div>
 	</div>
-	<!-- admin site -->
-
 	<div id="contents">
 		<div id="tagline" class="clearfix">
 		<?php
