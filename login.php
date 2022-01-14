@@ -3,11 +3,14 @@ session_start();
 if(isset($_POST['submitLogIn'])):
 {
 	
-	include($_SERVER['DOCUMENT_ROOT']."/control/control.php");
+	include($_SERVER['DOCUMENT_ROOT']."/models/user.php");
+	$_SESSION['user'] = new Users();
 
 	$_SESSION['user']->username = $_POST['username'];
 	$_SESSION['user']->pass = $_POST['password'];
+	$_SESSION['user']->login();
 	header("Location: /admin/admin.php");
+
 }
 elseif(!( isset($_SESSION['user']))):?>
 
