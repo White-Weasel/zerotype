@@ -3,6 +3,7 @@ function db_connect()
 {
     if (isset($_ENV['CLEARDB_DATABASE_URL']))
     {
+        //CLEARDB_DATABASE_URL has server's databse url
         $db_url = parse_url($_ENV['CLEARDB_DATABASE_URL']);
         $db_server = $db_url["host"];
         $db_username = $db_url["user"];
@@ -15,6 +16,7 @@ function db_connect()
     }
     else
     {
+        //localhost database
         $server = "localhost";
         $user = "root";
         $pass="";
