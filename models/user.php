@@ -8,9 +8,9 @@ class Users
 {
     public $id, $username, $pass, $email, $gender, $birth, $permission, $avatar, $secretKey;
     private $connect;
-    const READ_PERMISSION   = 10;
-    const WRITE_PERMISSION  = 100;
-    const ADMIN_PERMISSION  = 1000;
+    const NORMAL_USER   = 10;
+    const CONTRIBUTER   = 100;
+    const ADMIN         = 1000;
 
     public function __construct()
     {
@@ -93,7 +93,7 @@ class Users
     public function select()
     {
         global $conn;
-        if($this->has_permission($this::ADMIN_PERMISSION))
+        if($this->has_permission($this::ADMIN))
         {
             $sql = "SELECT * from user";
             $run = mysqli_query($conn, $sql);
@@ -106,7 +106,7 @@ class Users
     public function update($new_user)
     {
         global $conn;
-        if($this->id==$new_user->id || $this->has_permission($this::ADMIN_PERMISSION))
+        if($this->id==$new_user->id || $this->has_permission($this::ADMIN))
         {    
             $sql = "update user set ";
             if(is_null(($new_user->id)))
@@ -163,7 +163,7 @@ class Users
     public function delete($id=null)
     {
         global $conn;
-        if(!is_null(($id)) && $this->has_permission($this::ADMIN_PERMISSION))
+        if(!is_null(($id)) && $this->has_permission($this::ADMIN))
         {
             $sql = "Delete from user where id='$id'";
         }
