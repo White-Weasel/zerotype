@@ -2,6 +2,7 @@
 class API
 {
     protected $path, $params, $method;
+    protected $options;     // accepted params key
     public $result;
     public function __construct()
     { 
@@ -13,28 +14,41 @@ class API
     protected function init()
     {
         // override this
+        // Run first in __construct()
     }
 
     protected function get_params($input)
     {
-        $input = trim($input);
-        if(strlen($input) > 3)
+        // Turn request's params into an associative array, works with both GET and POST request
+        // only option listed in the options array will get in
+        $result = [];
+        if($this->method == "GET")
         {
-            $tmp = explode('?', $input);
-            $result = [];
-            foreach($tmp as $t)
+            $input = trim($input);
+            if(strlen($input) > 3)
             {
-                $l = explode('=', $t);
-                $result[$l[0]] = $l[1];
+                $tmp = explode('?', $input);
+                foreach($tmp as $t)
+                {
+                    $l = explode('=', $t);
+                    if(in_array($l[0], $this->options))
+                        $result[$l[0]] = $l[1];
+                }
             }
-            return($result);
         }
 
-        return [];
+        elseif($this->method == "POST")
+        {
+            foreach($input as $i_key => $i_val)
+                if(in_array($i_key, $this->options))
+                    $result[$i_key] = $i_val;
+        }
+        return $result;
     }
 
     protected function process()
     {
+        // Call to appropriate function depends on method 
         $this->method = $_SERVER['REQUEST_METHOD'];
         switch($this->method)
         {
@@ -44,6 +58,7 @@ class API
                 break;
             }
             case 'POST':{
+                $this->params = $this->get_params($_POST);
                 $this->result = $this->POST();
                 break;
             }
@@ -54,7 +69,8 @@ class API
             }
             default:
             {
-                $this->result = "ERROR: Method not allowed";
+                http_response_code(405);
+                die("405 ERROR: Method not allowed");
                 break;;
             }
         }
@@ -89,7 +105,7 @@ class API
 
     protected function response()
     {
-        // default response, the method function should override this
+        // default response, should be overrided
         if(!is_null($this->result))
             print_r($this->result);
     }
