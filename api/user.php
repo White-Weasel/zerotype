@@ -2,16 +2,28 @@
     require_once $_SERVER['DOCUMENT_ROOT']."/api/api.php";
     require_once $_SERVER['DOCUMENT_ROOT']."/models/user.php";
     session_start();
+    $pdo = pdo_connect();
+    //TODO: make use of the secretkey
     class UserAPI extends API
     {
-        private $user, $connect;
+        private $user, $pdoect;
         private $att_map;
 
         protected function init()
         {
             $this->connect = db_connect();
             $this->user = new Users();
-            $this->options = ['id', 'username', 'pass', 'gender', 'birth', 'permission', 'avatar', 'action'];
+            $this->options = ['id', 'username', 'pass', 'gender', 'birth', 'permission', 'avatar', 'secretkey', 'action'];
+            //typeMap is used with mysqli::bind_params. Since we are using PDO, this attribute is useless
+            $this->typeMap = array( 'id'        =>'i',
+                                    'username'  =>'s',
+                                    'pass'      =>'s',
+                                    'gender'    =>'s',
+                                    'birth'     =>'s',
+                                    'permission'=>'i',
+                                    'avatar'    =>'s',
+                                    'secretkey' =>'s',
+                                );
         }
 
         private function parse_user()
@@ -30,19 +42,34 @@
 
         protected function GET()
         {
+            // TODO: use pdo prepare on Users model too to prevent sql inject
             if(count($this->params) > 0)
             {
-                global $conn;
-                $sql =  $conn->prepare("SELECT * FROM user WHERE ");
+                global $pdo;
+                // preparing the sql query
+                $sql =  "SELECT * FROM user WHERE ";
                 foreach($this->params as $p_key => $p_value)
                 {
-                    if(in_array($p_key, $this->options))
-                        $sql = $sql."$p_key='$p_value' AND ";
+                    // get_params() should have clened the params
+                    // insert a condition for each param
+                    $sql = $sql."$p_key=:$p_key AND ";
                 }
+                //remove the trailing AND
                 $sql = str_replace_last(" AND ", "", $sql);
-                $run = mysqli_query($conn, $sql);
+                //echo $sql."<br>";
+                $query = $pdo->prepare($sql);
+                
+                // passing the parameters
+                foreach($this->params as $p_key => $p_value)
+                {
+                    $query->bindParam(":$p_key", $p_value);
+                }
+                $query->execute();
+                $result = $query->fetchAll(PDO::FETCH_ASSOC);
                 header('Content-Type: application/json; charset=utf-8');
-                echo json_encode($run->fetch_assoc());
+                echo json_encode($result, JSON_FORCE_OBJECT);
+                //print_r($result);
+                
             }
         }
 

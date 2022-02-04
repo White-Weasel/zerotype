@@ -55,7 +55,7 @@ elseif($_SERVER['REQUEST_METHOD'] == "GET")
 {
     if(isset($_GET['id']))
     {
-        //TODO: BUG HERE!!!!
+        //FIXME
         header('Content-Type: application/json; charset=utf-8');
         echo json_encode($contact->select($_GET['id'])->fetch_assoc());
     }

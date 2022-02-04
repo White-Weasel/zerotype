@@ -4,6 +4,8 @@ require_once $_SERVER['DOCUMENT_ROOT']."/models/ult.php";
 
 
 #TODO: quen mat khau
+//TODO: Move to PDO
+//TODO: make a specical user anon with the lowest permission possible
 class Users
 {
     public $id, $username, $pass, $email, $gender, $birth, $permission, $avatar, $secretKey;
